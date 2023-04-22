@@ -8,7 +8,7 @@
         <required-attributes>
           <attribute-list>
             <attr>authentication</attr>
-            <attr>dbname</attr>
+            <attr>v-dbfile</attr>
           </attribute-list>
         </required-attributes>
       </connection-normalizer>

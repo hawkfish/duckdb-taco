@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8' ?>
 
-<connector-plugin class='duckdb_jdbc' superclass='jdbc' plugin-version='0.7.2' name='DuckDB JDBC' version='0.7.2' min-version-tableau='2020.4' authentication='auth-none'>
+<connector-plugin class='duckdb_jdbc' superclass='jdbc' plugin-version='0.7.2' name='DuckDB JDBC' version='0.7.2' min-version-tableau='2020.4'>
   <vendor-information>
       <company name="DuckDB Labs"/>
       <support-link url="https://duckdb.com"/>

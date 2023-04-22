@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- See notes below for definitions that require 2020.3 or newer -->
-<dialect name='FullPostgreSQL90JDBC'
-         class='postgres_jdbc'
+<dialect name='DuckDB'
+         class='duckdb_jdbc'
+         base='PostgreSQL90Dialect'
          version='18.1'>
   <function-map>
     <function group='numeric' name='ABS' return-type='real'>

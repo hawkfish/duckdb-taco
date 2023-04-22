@@ -1,1 +1,1 @@
-A sample JDBC connector. This requires the Postgres JDBC driver.
+A JDBC connector for DuckDB. This requires the DuckDB JDBC driver.

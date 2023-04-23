@@ -5,4 +5,15 @@
          class='duckdb_jdbc'
          base='PostgreSQL90Dialect'
          version='18.1'>
+  <function-map>
+    <function group='numeric' name='LOG' return-type='real'>
+      <formula>(CASE WHEN %1 > 0 THEN LOG10(CAST(%1 AS DOUBLE)) ELSE NULL END)</formula>
+      <argument type='real' />
+    </function>
+    <function group='numeric' name='LOG' return-type='real'>
+      <formula><![CDATA[(CASE WHEN %1 > 0 AND %2 > 0 AND %2 <> 1 THEN LN(CAST(%1 AS DOUBLE))/LN(CAST(%2 AS DOUBLE)) ELSE NULL END)]]></formula>
+      <argument type='real' />
+      <argument type='real' />
+    </function>
+  </function-map>
 </dialect>

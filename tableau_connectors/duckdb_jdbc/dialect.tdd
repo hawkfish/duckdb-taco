@@ -6,6 +6,26 @@
          base='PostgreSQL90Dialect'
          version='18.1'>
   <function-map>
+    <function group='operator' name='+' return-type='datetime'>
+      <formula>(%1 + INTERVAL (%2) DAY)</formula>
+      <argument type='datetime' />
+      <argument type='real' />
+    </function>
+    <function group='operator' name='+' return-type='date'>
+      <formula>(%1 + INTERVAL (%2) DAY)::DATE</formula>
+      <argument type='date' />
+      <argument type='int' />
+    </function>
+    <function group='operator' name='-' return-type='datetime'>
+      <formula>(%1 - INTERVAL (%2) DAY)</formula>
+      <argument type='datetime' />
+      <argument type='real' />
+    </function>
+    <function group='operator' name='-' return-type='date'>
+      <formula>(%1 - INTERVAL (%2) DAY)::DATE</formula>
+      <argument type='date' />
+      <argument type='int' />
+    </function>
     <function group='numeric' name='LOG' return-type='real'>
       <formula>(CASE WHEN %1 > 0 THEN LOG10(CAST(%1 AS DOUBLE)) ELSE NULL END)</formula>
       <argument type='real' />
@@ -14,6 +34,10 @@
       <formula><![CDATA[(CASE WHEN %1 > 0 AND %2 > 0 AND %2 <> 1 THEN LN(CAST(%1 AS DOUBLE))/LN(CAST(%2 AS DOUBLE)) ELSE NULL END)]]></formula>
       <argument type='real' />
       <argument type='real' />
+    </function>
+    <function group='date' name='ISDATE' return-type='bool'>
+      <formula>(TRY_CAST(%1 AS TIMESTAMP) IS NOT NULL)</formula>
+      <argument type='str' />
     </function>
   </function-map>
 </dialect>

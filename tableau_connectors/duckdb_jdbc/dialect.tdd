@@ -26,6 +26,18 @@
       <argument type='date' />
       <argument type='int' />
     </function>
+    <function group='cast' name='DATE' return-type='date'>
+      <formula>date_trunc(&apos;day&apos;, CAST(&apos;1900-01-01&apos; AS DATE) + INTERVAL (%1) DAY)</formula>
+      <argument type='real' />
+    </function>
+    <function group='cast' name='DATETIME' return-type='datetime'>
+      <formula>(CAST(&apos;1900-01-01 00:00:00&apos; AS TIMESTAMP) + INTERVAL (%1) DAY)</formula>
+      <argument type='real' />
+    </function>
+    <function group='cast' name='DATETIME' return-type='datetime'>
+      <formula>TRY_CAST(%1 AS TIMESTAMP)</formula>
+      <argument type='str' />
+    </function>
     <function group='numeric' name='LOG' return-type='real'>
       <formula>(CASE WHEN %1 > 0 THEN LOG10(CAST(%1 AS DOUBLE)) ELSE NULL END)</formula>
       <argument type='real' />
@@ -48,5 +60,51 @@
       <formula>TRIM(CAST(%1 AS TEXT), &apos; &apos;)</formula>
       <argument type='str' />
     </function>
+    <date-function name='DATEADD' return-type='datetime'>
+      <formula>(%3 + INTERVAL (%2) %1)</formula>
+      <formula part='week'>(%3 + INTERVAL (7 * %2) DAY)</formula>
+      <formula part='quarter'>(%3 + INTERVAL (3 * %2) MONTH)</formula>
+      <formula part='iso-week'>(%3 + INTERVAL (%2) WEEK)</formula>
+      <formula part='iso-weekday'>(%3 + %2 * INTERVAL (%2) DAY)</formula>
+      <formula part='iso-year'>(%3 + (((CAST(DATE_TRUNC(&apos;DAY&apos;, CAST((DATE(&apos;1753-01-04&apos;) + ((EXTRACT(ISOYEAR FROM CAST(%3 AS TIMESTAMP)) + %2) - 1753) * INTERVAL &apos;1 YEAR&apos;) AS TIMESTAMP)) AS DATE) - (((7 + CAST(EXTRACT(DOW FROM (DATE(&apos;1753-01-04&apos;) + ((EXTRACT(ISOYEAR FROM CAST(%3 AS TIMESTAMP)) + %2) - 1753) * INTERVAL &apos;1 YEAR&apos;)) AS BIGINT) - 1) % 7) * INTERVAL &apos;1 DAY&apos;)) + (CAST(%3 AS DATE) - TO_DATE(TO_CHAR(%3, &apos;IYYY-01&apos;), &apos;IYYY-IW&apos;)) * INTERVAL &apos;1 DAY&apos;) - CAST(%3 AS DATE)))</formula>
+      <formula part='iso-quarter'>(%3 + (((CAST(DATE_TRUNC(&apos;DAY&apos;, CAST((DATE(&apos;1753-01-04&apos;) + ((CAST(((EXTRACT(ISOYEAR FROM CAST(%3 AS TIMESTAMP)) * 4 + (LEAST(CAST((EXTRACT(WEEK FROM %3) - 1) AS BIGINT) / 13, 3) + 1)) + %2) AS INT) / 4) - 1753) * INTERVAL &apos;1 YEAR&apos;) AS TIMESTAMP)) AS DATE) - (((7 + CAST(EXTRACT(DOW FROM (DATE(&apos;1753-01-04&apos;) + ((CAST(((EXTRACT(ISOYEAR FROM CAST(%3 AS TIMESTAMP)) * 4 + (LEAST(CAST((EXTRACT(WEEK FROM %3) - 1) AS BIGINT) / 13, 3) + 1)) + %2) AS INT) / 4) - 1753) * INTERVAL &apos;1 YEAR&apos;)) AS BIGINT) - 1) % 7) * INTERVAL &apos;1 DAY&apos;)) + (((CAST(((EXTRACT(ISOYEAR FROM CAST(%3 AS TIMESTAMP)) * 4 + (LEAST(CAST((EXTRACT(WEEK FROM %3) - 1) AS BIGINT) / 13, 3) + 1)) + %2) AS INT) % 4) - 1) * 91 + (CAST(%3 AS DATE) - TO_DATE(TO_CHAR(%3, &apos;IYYY-&apos;) || (LEAST(CAST((EXTRACT(WEEK FROM %3) - 1) AS BIGINT) / 13, 3) * 13 + 1), &apos;IYYY-IW&apos;))) * INTERVAL &apos;1 DAY&apos;) - CAST(%3 AS DATE)))</formula>
+      <argument type='localstr' />
+      <argument type='int' />
+      <argument type='datetime' />
+    </date-function>
+    <date-function name='DATENAME' return-type='str'>
+      <formula>STRFTIME(%2, &apos;%1&apos;)</formula>
+      <formula part='quarter'>(CAST((((EXTRACT(MONTH FROM %2) - 1) // 3) + 1) AS TEXT))</formula>
+      <formula part='week'>CAST(((7 + EXTRACT(DOY FROM %2) - 1 + EXTRACT(DOW FROM DATE_TRUNC(&apos;YEAR&apos;, %2))) // 7) AS TEXT)</formula>
+      <formula part='iso-quarter'>CAST((LEAST(CAST((EXTRACT(WEEK FROM %2) - 1) AS BIGINT) // 13, 3) + 1) AS TEXT)</formula>
+      <formula part='iso-week'>TO_CHAR(%2, &apos;IW&apos;)</formula>
+      <formula part='iso-weekday'>TO_CHAR(%2, &apos;ID&apos;)</formula>
+      <formula part='iso-year'>TO_CHAR(%2, &apos;IYYY&apos;)</formula>
+      <argument type='localstr' />
+      <argument type='datetime' />
+    </date-function>
+    <date-function name='DATENAME' return-type='str'>
+      <formula part='week'>CAST(((7 + EXTRACT(DOY FROM %2) - 1 + (CAST(7 + EXTRACT(DOW FROM DATE_TRUNC(&apos;YEAR&apos;, %2)) - %3 AS BIGINT) % 7) ) // 7) AS TEXT)</formula>
+      <argument type='localstr' />
+      <argument type='datetime' />
+      <argument type='localstr' />
+    </date-function>
   </function-map>
+  <sql-format>
+    <date-literal-escape value='PostgresStyle' />
+    <date-parts>
+      <date-part-group>
+        <date-function name='DATENAME' />
+        <part name='year' value='%Y' />
+        <part name='month' value='%B' />
+        <part name='dayofyear' value='%j' />
+        <part name='day' value='%d' />
+        <part name='weekday' value='%A' />
+        <part name='week' value='%U' />
+        <part name='hour' value='%H' />
+        <part name='minute' value='%M' />
+        <part name='second' value='%S' />
+      </date-part-group>
+    </date-parts>
+  </sql-format>
 </dialect>

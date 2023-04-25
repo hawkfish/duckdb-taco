@@ -39,5 +39,14 @@
       <formula>(TRY_CAST(%1 AS TIMESTAMP) IS NOT NULL)</formula>
       <argument type='str' />
     </function>
+    <function group='string' name='RIGHT' return-type='str'>
+      <formula>(CASE WHEN %2 &gt;= 0 THEN RIGHT(CAST(%1 AS TEXT), CAST(FLOOR(%2) AS INTEGER)) ELSE NULL END)</formula>
+      <argument type='str' />
+      <argument type='real' />
+    </function>
+    <function group='string' name='TRIM' return-type='str'>
+      <formula>TRIM(CAST(%1 AS TEXT), &apos; &apos;)</formula>
+      <argument type='str' />
+    </function>
   </function-map>
 </dialect>

@@ -7,7 +7,7 @@
          version='18.1'>
   <function-map>
     <function group='operator' name='+' return-type='datetime'>
-      <formula>(%1 + INTERVAL (%2) DAY)</formula>
+      <formula>(CAST(%1 AS TIMESTAMP) + INTERVAL (%2 * 86400000000) MICROSECONDS)</formula>
       <argument type='datetime' />
       <argument type='real' />
     </function>
@@ -17,7 +17,7 @@
       <argument type='int' />
     </function>
     <function group='operator' name='-' return-type='datetime'>
-      <formula>(%1 - INTERVAL (%2) DAY)</formula>
+      <formula>(CAST(%1 AS TIMESTAMP) - INTERVAL (%2 * 86400000000) MICROSECONDS)</formula>
       <argument type='datetime' />
       <argument type='real' />
     </function>

@@ -2,5 +2,5 @@
 
 <connection-fields>
   <field name="authentication" label="Authentication" category="authentication" value-type="string" editable="false" default-value="auth-none" />
-  <field name="server" label="Database File" category="general" value-type="file" editable="true" default-value="" />
+  <field name="server" label="@string/database_prompt/" category="general" value-type="file" editable="true" default-value="" />
 </connection-fields>

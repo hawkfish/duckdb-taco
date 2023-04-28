@@ -4,7 +4,7 @@
   <vendor-information>
       <company name="DuckDB Labs"/>
       <support-link url="https://duckdb.com"/>
-      <driver-download-link url="https://github.com/duckdb/duckdb/actions/runs/4760732681"/>
+      <driver-download-link url="https://github.com/duckdb/duckdb/suites/12541063472/artifacts/669914530"/>
   </vendor-information>
   <connection-customization class="duckdb_jdbc" enabled="true" version="0.7.2">
     <vendor name="vendor"/>

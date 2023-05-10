@@ -60,6 +60,49 @@
       <formula>TRIM(CAST(%1 AS TEXT), &apos; &apos;)</formula>
       <argument type='str' />
     </function>
+    <function group='aggregate' name='MEDIAN' return-type='real'>
+      <formula>MEDIAN(%1)</formula>
+      <unagg-formula>%1</unagg-formula>
+      <argument type='real' />
+    </function>
+    <function group='aggregate' name='MEDIAN' return-type='datetime'>
+      <formula>MEDIAN(%1)</formula>
+      <unagg-formula>%1</unagg-formula>
+      <argument type='datetime' />
+    </function>
+    <function group='aggregate' name='MEDIAN' return-type='str'>
+      <formula>MEDIAN(%1)</formula>
+      <unagg-formula>%1</unagg-formula>
+      <argument type='str' />
+    </function>
+    <function group='aggregate' name='PERCENTILE' return-type='real'>
+      <formula>QUANTILE_CONT(%1, %2)</formula>
+      <unagg-formula>%1</unagg-formula>
+      <argument type='real' />
+      <argument type='localreal' />
+    </function>
+    <function group='aggregate' name='PERCENTILE' return-type='datetime'>
+      <formula>QUANTILE_CONT(%1, %2)</formula>
+      <unagg-formula>%1</unagg-formula>
+      <argument type='datetime' />
+      <argument type='localreal' />
+    </function>
+    <function group='aggregate' name='PERCENTILE' return-type='str'>
+      <formula>QUANTILE_DISC(%1, %2)</formula>
+      <unagg-formula>%1</unagg-formula>
+      <argument type='str' />
+      <argument type='localreal' />
+    </function>
+    <function group='aggregate' name='KURTOSIS' return-type='real'>
+      <formula>KURTOSIS(%1)</formula>
+      <unagg-formula>%1</unagg-formula>
+      <argument type='real' />
+    </function>
+    <function group='aggregate' name='SKEWNESS' return-type='real'>
+      <formula>SKEWNESS(%1)</formula>
+      <unagg-formula>%1</unagg-formula>
+      <argument type='real' />
+    </function>
     <date-function name='DATEADD' return-type='datetime'>
       <formula>(%3 + INTERVAL (%2) %1)</formula>
       <formula part='week'>(%3 + INTERVAL (7 * %2) DAY)</formula>
@@ -95,6 +138,54 @@
       <argument type='str' />
     </date-function>
   </function-map>
+  <supported-aggregations>
+    <aggregation value='AGG_COUNT'/>
+    <aggregation value='AGG_COUNTD'/>
+    <aggregation value='AGG_SUM'/>
+    <aggregation value='AGG_AVG'/>
+    <aggregation value='AGG_MIN'/>
+    <aggregation value='AGG_MAX'/>
+    <aggregation value='AGG_STDEV'/>
+    <aggregation value='AGG_STDEVP'/>
+    <aggregation value='AGG_VAR'/>
+    <aggregation value='AGG_VARP'/>
+    <aggregation value='AGG_COVAR'/>
+    <aggregation value='AGG_COVARP'/>
+    <aggregation value='AGG_CORR'/>
+    <aggregation value='AGG_MEDIAN'/>
+    <aggregation value='AGG_PERCENTILE'/>
+    <aggregation value='AGG_SKEWNESS'/>
+    <aggregation value='AGG_KURTOSIS'/>
+
+    <aggregation value='AGG_YEAR'/>
+    <aggregation value='AGG_QTR'/>
+    <aggregation value='AGG_MONTH'/>
+    <aggregation value='AGG_DAY'/>
+    <aggregation value='AGG_WEEK'/>
+    <aggregation value='AGG_WEEKDAY'/>
+    <aggregation value='AGG_MONTHYEAR'/>
+    <aggregation value='AGG_MDY'/>
+    <aggregation value='AGG_HOUR'/>
+    <aggregation value='AGG_MINUTE'/>
+    <aggregation value='AGG_SECOND'/>
+    <aggregation value='AGG_ISO_YEAR'/>
+    <aggregation value='AGG_ISO_QTR'/>
+    <aggregation value='AGG_ISO_WEEK'/>
+    <aggregation value='AGG_ISO_WEEKDAY'/>
+
+    <aggregation value='TRUNC_YEAR'/>
+    <aggregation value='TRUNC_QTR'/>
+    <aggregation value='TRUNC_MONTH'/>
+    <aggregation value='TRUNC_DAY'/>
+    <aggregation value='TRUNC_WEEK'/>
+    <aggregation value='TRUNC_HOUR'/>
+    <aggregation value='TRUNC_MINUTE'/>
+    <aggregation value='TRUNC_SECOND'/>
+    <aggregation value='TRUNC_ISO_YEAR'/>
+    <aggregation value='TRUNC_ISO_QTR'/>
+    <aggregation value='TRUNC_ISO_WEEK'/>
+    <aggregation value='TRUNC_ISO_WEEKDAY'/>
+  </supported-aggregations>
   <sql-format>
     <date-literal-escape value='PostgresStyle' />
     <date-parts>

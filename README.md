@@ -23,7 +23,7 @@ Make sure that you point to the `tableau_connectors` subdirectory, not the main 
 as git creates some invisible subdirectories that will abort the loading process.
 You can then create a new connection by choosing "DuckDB JDBC by DuckDB Labs":
 
-<img width="1364" alt="taco-dev" src="./images/taco-dev.png">
+<img width="1364" alt="Development Mode Connect" src="./images/taco-dev.png">
 
 To use this connector as a signed connector, choose it from the "Additional Connectors" list.
 Further information when the connector is approved.
@@ -32,7 +32,7 @@ Further information when the connector is approved.
 
 DuckDB is a file-based database, so the connection dialogue simply asks for a file:
 
-<img width="548" alt="taco-connect" src="./images/taco-connect.png">
+<img width="548" alt="Connection Dialogue" src="./images/taco-connect.png">
 
 Because the engine is embedded in the driver itself, 
 you need to make sure that the driver uses the same database version as was used to create the database file.
@@ -40,7 +40,15 @@ you need to make sure that the driver uses the same database version as was used
 Once connected, you can use the Tableau connection window to choose schemas, join tables, 
 and perform all the basic data cleaning operations it provides for creating a data source:
 
-<img width="1364" alt="taco-datasource" src="./images/taco-datasource.png">
+<img width="1364" alt="Datasource Editing" src="./images/taco-datasource.png">
+
+## Initial SQL
+
+Tableau allows connections to run initial SQL.
+This feature can be used to make sure that various settings are correct:
+
+<img alt="Initial SQL Example" src="./images/taco-initial-sql.png">
+
 
 ## Use Cases
 

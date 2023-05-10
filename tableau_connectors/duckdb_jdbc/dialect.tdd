@@ -51,6 +51,23 @@
       <formula>(TRY_CAST(%1 AS TIMESTAMP) IS NOT NULL)</formula>
       <argument type='str' />
     </function>
+    <function group='date' name='MAKEDATE' return-type='date'>
+      <formula>MAKE_DATE(%1, %2, %3)</formula>
+      <argument type='int' />
+      <argument type='int' />
+      <argument type='int' />
+    </function>
+    <function group='date' name='MAKETIME' return-type='datetime'>
+      <formula>MAKE_TIMESTAMP(1899, 1, 1, %1, %2, %3)</formula>
+      <argument type='int' />
+      <argument type='int' />
+      <argument type='real' />
+    </function>
+    <function group='date' name='MAKEDATETIME' return-type='datetime'>
+      <formula>(CAST(%1 AS DATE) + CAST(%2 AS TIME))</formula>
+      <argument type='date' />
+      <argument type='datetime' />
+    </function>
     <function group='string' name='RIGHT' return-type='str'>
       <formula>(CASE WHEN %2 &gt;= 0 THEN RIGHT(CAST(%1 AS TEXT), CAST(FLOOR(%2) AS INTEGER)) ELSE NULL END)</formula>
       <argument type='str' />

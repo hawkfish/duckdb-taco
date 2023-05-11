@@ -23,11 +23,19 @@ jobs:
       with:
         repository: tableau/connector-plugin-sdk
         fetch-depth: 0
-
+    
+    - name: Create Virtual Environment
+      shell: bash
+      run: |
+        pushd connector-packager
+        python -m venv .venv
+        popd
+      
     - name: Package Taco
       shell: bash
       run: |
         pushd connector-packager
+        source .venv/bin/activate
         python setup.py install
         python -m connector_packager.package ../../duckdb-taco/tableau_connectors/duckdb_jdbc
         popd

@@ -17,12 +17,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        fetch-depth: 0
+        ref: main
+        path: duckdb-taco
 
     - uses: actions/checkout@v3
       with:
         repository: tableau/connector-plugin-sdk
-        fetch-depth: 0
+        ref: main
+        path: connector-plugin-sdk
     
     - name: Create Virtual Environment
       shell: bash

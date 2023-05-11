@@ -40,7 +40,7 @@ jobs:
         source .venv/bin/activate
         cd connector-packager
         python setup.py install
-        python -m connector_packager.package ../../duckdb-taco/tableau_connectors/duckdb_jdbc
+        python -m connector_packager.package ../../taco/tableau_connectors/duckdb_jdbc
         popd
 
     - uses: actions/upload-artifact@v3

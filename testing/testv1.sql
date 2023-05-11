@@ -1,5 +1,5 @@
 -- pushd ~/Documents/Development/connector-plugin-sdk/tests/datasets/TestV1
--- duckdb taco.db
+-- duckdb ~/taco.db
 create schema TestV1;
 use taco.TestV1;
 .read DDL/calcs.sql

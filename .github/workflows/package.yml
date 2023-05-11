@@ -27,15 +27,16 @@ jobs:
     - name: Create Virtual Environment
       shell: bash
       run: |
-        pushd connector-packager
+        pushd connector-plugin-sdk
         python -m venv .venv
         popd
       
     - name: Package Taco
       shell: bash
       run: |
-        pushd connector-packager
+        pushd connector-plugin-sdk
         source .venv/bin/activate
+        cd connector-packager
         python setup.py install
         python -m connector_packager.package ../../duckdb-taco/tableau_connectors/duckdb_jdbc
         popd
@@ -44,4 +45,4 @@ jobs:
       with:
         name: duckdb_taco
         path: |
-          connector-packager/packaged-connector/duckdb_jdbc.taco
+          connector-plugin-sdk/connector-packager/packaged-connector/duckdb_jdbc.taco

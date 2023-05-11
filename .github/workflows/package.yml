@@ -43,8 +43,16 @@ jobs:
         python -m connector_packager.package ../../taco/tableau_connectors/duckdb_jdbc
         popd
 
-    - uses: actions/upload-artifact@v3
+    - name: Upload Taco
+      uses: actions/upload-artifact@v3
       with:
         name: duckdb_taco
         path: |
           sdk/connector-packager/packaged-connector/duckdb_jdbc.taco
+
+    - name: Upload Connector
+      uses: actions/upload-artifact@v3
+      with:
+        name: duckdb_jdbc
+        path: |
+          taco/tableau_connectors/duckdb_jdbc

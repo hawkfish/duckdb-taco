@@ -3,16 +3,16 @@
 <connector-plugin class='duckdb_jdbc' superclass='jdbc' plugin-version='0.7.2' name='DuckDB JDBC' version='0.7.2' min-version-tableau='2020.4'>
   <vendor-information>
       <company name="DuckDB Labs"/>
-      <support-link url="https://duckdb.com"/>
-      <driver-download-link url="https://github.com/duckdb/duckdb/suites/12541063472/artifacts/669914530"/>
+      <support-link url="https://duckdb.org"/>
+      <driver-download-link url="https://github.com/duckdb/duckdb/suites/12789851033/artifacts/688301760"/>
   </vendor-information>
   <connection-customization class="duckdb_jdbc" enabled="true" version="0.7.2">
     <vendor name="vendor"/>
     <driver name="driver"/>
     <customizations>
-      <customization name="CAP_SELECT_INTO" value="yes"/>
-      <customization name="CAP_SELECT_TOP_INTO" value="yes"/>
-      <customization name="CAP_CREATE_TEMP_TABLES" value="no"/>
+      <customization name="CAP_SELECT_INTO" value="no"/>
+      <customization name="CAP_SELECT_TOP_INTO" value="no"/>
+      <customization name="CAP_CREATE_TEMP_TABLES" value="yes"/>
       <customization name="CAP_QUERY_BOOLEXPR_TO_INTEXPR" value="no"/>
       <customization name="CAP_QUERY_GROUP_BY_BOOL" value="yes"/>
       <customization name="CAP_QUERY_GROUP_BY_DEGREE" value="yes"/>
@@ -27,7 +27,6 @@
       <customization name="CAP_SUPPORTS_SPLIT_FROM_RIGHT" value="yes"/>
       <customization name="CAP_SUPPORTS_UNION" value="yes"/>
       <customization name="CAP_QUERY_ALLOW_PARTIAL_AGGREGATION" value="no"/>
-      <customization name="CAP_QUERY_TIME_REQUIRES_CAST" value="yes"/>
     </customizations>
   </connection-customization>
   <connection-fields file='connectionFields.xml'/>

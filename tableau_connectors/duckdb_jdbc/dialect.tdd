@@ -51,6 +51,23 @@
       <formula>(TRY_CAST(%1 AS TIMESTAMP) IS NOT NULL)</formula>
       <argument type='str' />
     </function>
+    <function group='date' name='MAKEDATE' return-type='date'>
+      <formula>MAKE_DATE(%1, %2, %3)</formula>
+      <argument type='int' />
+      <argument type='int' />
+      <argument type='int' />
+    </function>
+    <function group='date' name='MAKETIME' return-type='datetime'>
+      <formula>MAKE_TIMESTAMP(1899, 1, 1, %1, %2, %3)</formula>
+      <argument type='int' />
+      <argument type='int' />
+      <argument type='real' />
+    </function>
+    <function group='date' name='MAKEDATETIME' return-type='datetime'>
+      <formula>(CAST(%1 AS DATE) + CAST(%2 AS TIME))</formula>
+      <argument type='date' />
+      <argument type='datetime' />
+    </function>
     <function group='string' name='RIGHT' return-type='str'>
       <formula>(CASE WHEN %2 &gt;= 0 THEN RIGHT(CAST(%1 AS TEXT), CAST(FLOOR(%2) AS INTEGER)) ELSE NULL END)</formula>
       <argument type='str' />
@@ -59,6 +76,49 @@
     <function group='string' name='TRIM' return-type='str'>
       <formula>TRIM(CAST(%1 AS TEXT), &apos; &apos;)</formula>
       <argument type='str' />
+    </function>
+    <function group='aggregate' name='MEDIAN' return-type='real'>
+      <formula>MEDIAN(%1)</formula>
+      <unagg-formula>%1</unagg-formula>
+      <argument type='real' />
+    </function>
+    <function group='aggregate' name='MEDIAN' return-type='datetime'>
+      <formula>MEDIAN(%1)</formula>
+      <unagg-formula>%1</unagg-formula>
+      <argument type='datetime' />
+    </function>
+    <function group='aggregate' name='MEDIAN' return-type='str'>
+      <formula>MEDIAN(%1)</formula>
+      <unagg-formula>%1</unagg-formula>
+      <argument type='str' />
+    </function>
+    <function group='aggregate' name='PERCENTILE' return-type='real'>
+      <formula>QUANTILE_CONT(%1, %2)</formula>
+      <unagg-formula>%1</unagg-formula>
+      <argument type='real' />
+      <argument type='localreal' />
+    </function>
+    <function group='aggregate' name='PERCENTILE' return-type='datetime'>
+      <formula>QUANTILE_CONT(%1, %2)</formula>
+      <unagg-formula>%1</unagg-formula>
+      <argument type='datetime' />
+      <argument type='localreal' />
+    </function>
+    <function group='aggregate' name='PERCENTILE' return-type='str'>
+      <formula>QUANTILE_DISC(%1, %2)</formula>
+      <unagg-formula>%1</unagg-formula>
+      <argument type='str' />
+      <argument type='localreal' />
+    </function>
+    <function group='aggregate' name='KURTOSIS' return-type='real'>
+      <formula>KURTOSIS(%1)</formula>
+      <unagg-formula>%1</unagg-formula>
+      <argument type='real' />
+    </function>
+    <function group='aggregate' name='SKEWNESS' return-type='real'>
+      <formula>SKEWNESS(%1)</formula>
+      <unagg-formula>%1</unagg-formula>
+      <argument type='real' />
     </function>
     <date-function name='DATEADD' return-type='datetime'>
       <formula>(%3 + INTERVAL (%2) %1)</formula>
@@ -89,7 +149,60 @@
       <argument type='datetime' />
       <argument type='localstr' />
     </date-function>
+    <date-function name='DATEPARSE' return-type='datetime'>
+      <formula>STRPTIME(%2, %1)</formula>
+      <argument type='localstr' />
+      <argument type='str' />
+    </date-function>
   </function-map>
+  <supported-aggregations>
+    <aggregation value='AGG_COUNT'/>
+    <aggregation value='AGG_COUNTD'/>
+    <aggregation value='AGG_SUM'/>
+    <aggregation value='AGG_AVG'/>
+    <aggregation value='AGG_MIN'/>
+    <aggregation value='AGG_MAX'/>
+    <aggregation value='AGG_STDEV'/>
+    <aggregation value='AGG_STDEVP'/>
+    <aggregation value='AGG_VAR'/>
+    <aggregation value='AGG_VARP'/>
+    <aggregation value='AGG_COVAR'/>
+    <aggregation value='AGG_COVARP'/>
+    <aggregation value='AGG_CORR'/>
+    <aggregation value='AGG_MEDIAN'/>
+    <aggregation value='AGG_PERCENTILE'/>
+    <aggregation value='AGG_SKEWNESS'/>
+    <aggregation value='AGG_KURTOSIS'/>
+
+    <aggregation value='AGG_YEAR'/>
+    <aggregation value='AGG_QTR'/>
+    <aggregation value='AGG_MONTH'/>
+    <aggregation value='AGG_DAY'/>
+    <aggregation value='AGG_WEEK'/>
+    <aggregation value='AGG_WEEKDAY'/>
+    <aggregation value='AGG_MONTHYEAR'/>
+    <aggregation value='AGG_MDY'/>
+    <aggregation value='AGG_HOUR'/>
+    <aggregation value='AGG_MINUTE'/>
+    <aggregation value='AGG_SECOND'/>
+    <aggregation value='AGG_ISO_YEAR'/>
+    <aggregation value='AGG_ISO_QTR'/>
+    <aggregation value='AGG_ISO_WEEK'/>
+    <aggregation value='AGG_ISO_WEEKDAY'/>
+
+    <aggregation value='TRUNC_YEAR'/>
+    <aggregation value='TRUNC_QTR'/>
+    <aggregation value='TRUNC_MONTH'/>
+    <aggregation value='TRUNC_DAY'/>
+    <aggregation value='TRUNC_WEEK'/>
+    <aggregation value='TRUNC_HOUR'/>
+    <aggregation value='TRUNC_MINUTE'/>
+    <aggregation value='TRUNC_SECOND'/>
+    <aggregation value='TRUNC_ISO_YEAR'/>
+    <aggregation value='TRUNC_ISO_QTR'/>
+    <aggregation value='TRUNC_ISO_WEEK'/>
+    <aggregation value='TRUNC_ISO_WEEKDAY'/>
+  </supported-aggregations>
   <sql-format>
     <date-literal-escape value='PostgresStyle' />
     <date-parts>
@@ -106,5 +219,99 @@
         <part name='second' value='%S' />
       </date-part-group>
     </date-parts>
+    <format-select>
+      <part name='Into' value='CREATE TEMP TABLE %1 AS' />
+      <part name='Select' value='SELECT %1' />
+      <part name='From' value='FROM %1' />
+      <part name='Where' value='WHERE %1' />
+      <part name='Group' value='GROUP BY %1' />
+      <part name='Having' value='HAVING %1' />
+      <part name='OrderBy' value='ORDER BY %1' />
+      <part name='Top' value='LIMIT %1' />
+      <part name='TopSamplePercent' value='USING SAMPLE %1 PERCENT (BERNOULLI)' />
+      <part name='TopSampleRecords' value='USING SAMPLE %1 ROWS' />
+    </format-select>
+    <icu-date-token-map>
+      <token key="G" value="" />
+      <token key="y" value="%-y" />
+      <token key="yy" value="%y" />
+      <token key="yyyy" value="%Y" />
+      <token key="u" value="" />
+      <token key="U" value="" />
+      <token key="Q" value="" />
+      <token key="QQ" value="" />
+      <token key="QQQ" value="" />
+      <token key="QQQQ" value="" />
+      <token key="q" value="" />
+      <token key="qq" value="" />
+      <token key="qqq" value="" />
+      <token key="qqqq" value="" />
+      <token key="M" value="%-m" />
+      <token key="MM" value="%m" />
+      <token key="MMM" value="%b" />
+      <token key="MMMM" value="%B" />
+      <token key="MMMMM" value="" />
+      <token key="L" value="%-m" />
+      <token key="LL" value="%m" />
+      <token key="LLL" value="%b" />
+      <token key="LLLL" value="%B" />
+      <token key="LLLLL" value="" />
+      <token key="w" value="%U" />
+      <token key="ww" value="%U" />
+      <token key="W" value="" />
+      <token key="d" value="%-d" />
+      <token key="dd" value="%d" />
+      <token key="D" value="%-j" />
+      <token key="F" value="" />
+      <token key="g" value="" />
+      <token key="E" value="%a" />
+      <token key="EE" value="%a" />
+      <token key="EEE" value="%A" />
+      <token key="EEEE" value="%A" />
+      <token key="EEEEE" value="" />
+      <token key="e" value="%w" />
+      <token key="ee" value="%w" />
+      <token key="eee" value="%a" />
+      <token key="eeee" value="%A" />
+      <token key="eeeee" value="" />
+      <token key="c" value="%w" />
+      <token key="cc" value="%w" />
+      <token key="ccc" value="%a" />
+      <token key="cccc" value="%A" />
+      <token key="ccccc" value="" />
+      <token key="a" value="%p" />
+      <token key="h" value="%-I" />
+      <token key="hh" value="%I" />
+      <token key="H" value="%-H" />
+      <token key="HH" value="%H" />
+      <token key="k" value="" />
+      <token key="kk" value="" />
+      <token key="K" value="" />
+      <token key="KK" value="" />
+      <token key="m" value="%-M" />
+      <token key="mm" value="%M" />
+      <token key="s" value="%-S" />
+      <token key="ss" value="%S" />
+      <token key="S" value="" />
+      <token key="SS" value="" />
+      <token key="SSS" value="%g" />
+      <token key="SSSS" value="" />
+      <token key="SSSSS" value="" />
+      <token key="SSSSSS" value="%f" />
+      <token key="A" value="" />
+      <token key="z" value="%Z" />
+      <token key="zz" value="%Z" />
+      <token key="zzz" value="%Z" />
+      <token key="zzzz" value="%Z" />
+      <token key="Z" value="%z" />
+      <token key="ZZ" value="%z" />
+      <token key="ZZZ" value="%z" />
+      <token key="ZZZZ" value="" />
+      <token key="ZZZZZ" value="" />
+      <token key="v" value="%Z" />
+      <token key="vvvv" value="%Z" />
+      <token key="V" value="%z" />
+      <token key="VVVV" value="%z" />
+    </icu-date-token-map>
   </sql-format>
 </dialect>

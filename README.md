@@ -43,7 +43,7 @@ and perform all the basic data cleaning operations it provides for creating a da
 <img width="1364" alt="Datasource Editing" src="./images/taco-datasource.png">
 
 Note that DuckDB has a three-level naming system (`database.schema.table`)
-so you will need to select the schema for the file.
+so you will need to select the database for the file (instead of `system` or `temp`).
 
 ## Initial SQL
 

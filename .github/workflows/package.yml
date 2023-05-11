@@ -15,31 +15,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: Install Git 2.18.5
-      shell: bash
-      run: |
-        wget https://github.com/git/git/archive/refs/tags/v2.18.5.tar.gz
-        tar xvf v2.18.5.tar.gz
-        cd git-2.18.5
-        make
-        make prefix=/usr install
-        git --version
-
-    - name: Install Python 3.7
-      if: ${{ inputs.python }} == 1
-      shell: bash
-      run: |
-        wget https://www.python.org/ftp/python/3.7.12/Python-3.7.12.tgz
-        tar xvf Python-3.7.12.tgz
-        cd Python-3.7.12
-        mkdir -p pythonbin
-        ./configure --with-ensurepip=install
-        make -j
-        make install
-        python3.7 --version
-        python3.7 -m pip install pip
-        python3.7 -m pip install requests awscli
-
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
@@ -53,8 +28,8 @@ jobs:
       shell: bash
       run: |
         pushd connector-packager
-        python3.7 setup.py install
-        python3.7 -m connector_packager.package ../../duckdb-taco/tableau_connectors/duckdb_jdbc
+        python setup.py install
+        python -m connector_packager.package ../../duckdb-taco/tableau_connectors/duckdb_jdbc
         popd
 
     - uses: actions/upload-artifact@v3

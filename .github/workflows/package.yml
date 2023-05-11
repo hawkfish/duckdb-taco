@@ -6,27 +6,59 @@ name: Package DuckDB Taco
 # or API.
 on:
   workflow_dispatch:
-    # Inputs the workflow accepts.
-    inputs:
-      name:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
-        # Default value if no value is explicitly provided
-        default: 'World'
-        # Input has to be provided for the workflow to run
-        required: true
-        # The data type of the input
-        type: string
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
-  greet:
+  package:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello ${{ inputs.name }}"
+    - name: Install Git 2.18.5
+      shell: bash
+      run: |
+        wget https://github.com/git/git/archive/refs/tags/v2.18.5.tar.gz
+        tar xvf v2.18.5.tar.gz
+        cd git-2.18.5
+        make
+        make prefix=/usr install
+        git --version
+
+    - name: Install Python 3.7
+      if: ${{ inputs.python }} == 1
+      shell: bash
+      run: |
+        wget https://www.python.org/ftp/python/3.7.12/Python-3.7.12.tgz
+        tar xvf Python-3.7.12.tgz
+        cd Python-3.7.12
+        mkdir -p pythonbin
+        ./configure --with-ensurepip=install
+        make -j
+        make install
+        python3.7 --version
+        python3.7 -m pip install pip
+        python3.7 -m pip install requests awscli
+
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - uses: actions/checkout@v3
+      with:
+        repository: tableau/connector-plugin-sdk
+        fetch-depth: 0
+
+    - name: Package Taco
+      shell: bash
+      run: |
+        pushd connector-packager
+        python3.7 setup.py install
+        python3.7 -m connector_packager.package ../../duckdb-taco/tableau_connectors/duckdb_jdbc
+        popd
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: duckdb_taco
+          path: |
+            connector-packager/packaged-connector/duckdb_jdbc.taco

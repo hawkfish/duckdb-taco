@@ -15,28 +15,28 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout Taco
+      uses: actions/checkout@v3
       with:
-        ref: main
-        path: duckdb-taco
+        path: taco
 
-    - uses: actions/checkout@v3
+    - name: Checkout SDK
+      uses: actions/checkout@v3
       with:
         repository: tableau/connector-plugin-sdk
-        ref: main
-        path: connector-plugin-sdk
+        path: sdk
     
     - name: Create Virtual Environment
       shell: bash
       run: |
-        pushd connector-plugin-sdk
+        pushd sdk
         python -m venv .venv
         popd
       
     - name: Package Taco
       shell: bash
       run: |
-        pushd connector-plugin-sdk
+        pushd sdk
         source .venv/bin/activate
         cd connector-packager
         python setup.py install
@@ -47,4 +47,4 @@ jobs:
       with:
         name: duckdb_taco
         path: |
-          connector-plugin-sdk/connector-packager/packaged-connector/duckdb_jdbc.taco
+          sdk/connector-packager/packaged-connector/duckdb_jdbc.taco

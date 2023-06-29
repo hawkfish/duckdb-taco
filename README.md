@@ -52,6 +52,19 @@ This feature can be used to make sure that various settings are correct:
 
 <img alt="Initial SQL Example" src="./images/taco-initial-sql.png">
 
+## In-Memory Operation
+
+The driver can be used with an in-memory database by typing the file name `:memory:` 
+into the file path.
+The data will then need to be provided by an Initial SQL string e.g.,
+
+```sql
+CREATE VIEW my_parquet AS
+    SELECT *
+    FROM read_parquet('/path/to/file/my_file.parquet');
+```
+
+You can then read it by using the Tableau connection window controls.
 
 ## Use Cases
 

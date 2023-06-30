@@ -154,6 +154,19 @@
       <argument type='localstr' />
       <argument type='str' />
     </date-function>
+    <date-function name='DATETRUNC' return-type='datetime'>
+      <formula>CAST( DATE_TRUNC( &apos;%1&apos;, CAST(%2 AS TIMESTAMP) ) AS TIMESTAMP)</formula>
+      <formula part='quarter'>CAST(DATE_TRUNC(&apos;QUARTER&apos;, CAST(%2 AS DATE)) AS TIMESTAMP)</formula>
+      <formula part='week'>CAST((DATE_TRUNC( &apos;DAY&apos;, CAST(%2 AS DATE) ) + (-EXTRACT(DOW FROM %2) * INTERVAL &apos;1 DAY&apos;)) AS TIMESTAMP)</formula>
+      <argument type='localstr' />
+      <argument type='datetime' />
+    </date-function>
+    <date-function name='DATETRUNC' return-type='datetime'>
+      <formula part='week'>CAST(CAST(DATE_TRUNC( &apos;DAY&apos;, CAST(%2 AS TIMESTAMP)) AS DATE) - (((7 + CAST(EXTRACT(DOW FROM %2) AS BIGINT) - %3) % 7) * INTERVAL &apos;1 DAY&apos;) AS TIMESTAMP)</formula>
+      <argument type='localstr' />
+      <argument type='datetime' />
+      <argument type='localstr' />
+    </date-function>
   </function-map>
   <supported-aggregations>
     <aggregation value='AGG_COUNT'/>

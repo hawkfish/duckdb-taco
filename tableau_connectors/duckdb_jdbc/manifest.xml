@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='utf-8' ?>
 
-<connector-plugin class='duckdb_jdbc' superclass='jdbc' plugin-version='0.7.2' name='DuckDB JDBC' version='0.7.2' min-version-tableau='2020.4'>
+<connector-plugin class='duckdb_jdbc' superclass='jdbc' plugin-version='0.8.1' name='DuckDB JDBC' version='0.8.1' min-version-tableau='2020.4'>
   <vendor-information>
       <company name="DuckDB Labs"/>
       <support-link url="https://duckdb.org"/>
-      <driver-download-link url="https://github.com/duckdb/duckdb/suites/12816968773/artifacts/690131992"/>
+      <driver-download-link url="https://github.com/duckdb/duckdb/releases/tag/v0.8.1"/>
   </vendor-information>
-  <connection-customization class="duckdb_jdbc" enabled="true" version="0.7.2">
+  <connection-customization class="duckdb_jdbc" enabled="true" version="0.8.1">
     <vendor name="vendor"/>
     <driver name="driver"/>
     <customizations>

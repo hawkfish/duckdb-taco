@@ -79,9 +79,10 @@ quit
 ```
 
 Create this file with [the Script Editor](https://support.apple.com/guide/script-editor/welcome/mac) 
-(located in `/Applications/Utilities`) and save it as a packaged application. 
-You can then double-click it to launch Tableau. 
-You will need to change the application name in the script when you get upgrades.
+(located in `/Applications/Utilities`) 
+and [save it as a packaged application](https://support.apple.com/guide/script-editor/save-a-script-as-an-app-scpedt1072/mac):
+
+<img src='/images/taco-applescript.png' alt='tableau-applescript' width=50%>
 
 #### Windows Desktop
 
@@ -116,7 +117,7 @@ so you will need to select the database for the file (instead of `system` or `te
 Tableau allows connections to run initial SQL.
 This feature can be used to make sure that various settings are correct:
 
-<img alt="Initial SQL Example" src="./images/taco-initial-sql.png">
+<img alt="Initial SQL Example" src="./images/taco-initial-sql.png" width=75%>
 
 ## In-Memory Operation
 

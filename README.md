@@ -1,12 +1,11 @@
-# duckdb-taco
-Tableau Connector for DuckDB
+# duckdb-taco - A Tableau Connector for DuckDB
 
 While it is possible to use the Tableau-provided Postgres dialect to communicate with the DuckDB JDBC driver,
 the experience is not ideal because there are some significant differences between the dialects.
 This connector has been fully tested against the Tableau dialect generator and is more compatible 
 than the provided Postgres dialect.
 
-Please file any problems as bugs against the this repository and not against DuckDB.
+Please file any connectivity problems as bugs against this repository and not against DuckDB.
 
 ## Installation
 

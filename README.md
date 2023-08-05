@@ -69,8 +69,19 @@ Copy the Taco file to the `/Users/[MacOS User]/Documents/My Tableau Repository/C
 Then launch Tableau Desktop from the Terminal with the the command line argument to disable signature validation:
 
 ```sh
-$ /Applications/Tableau\ Desktop\ <year>.<quarter>.app/Contents/MacOS/Tableau -DDisableVerifyConnectorPluginSignature=true
+$ /Applications/Tableau\ Desktop\ 2023.2.app/Contents/MacOS/Tableau -DDisableVerifyConnectorPluginSignature=true
 ```
+
+You can also package this up with AppleScript by using the following script:
+
+```
+do shell script "\"/Applications/Tableau Desktop 2023.2.app/Contents/MacOS/Tableau\" -DDisableVerifyConnectorPluginSignature=true"
+quit
+```
+
+Create this file with `Script Editor` and save it as a packaged application. 
+You can then double-click it to launch Tableau.
+You will need to change the application name when you get upgrades.
 
 #### Windows Desktop
 

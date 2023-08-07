@@ -34,9 +34,8 @@ Download the [snapshot jar](https://oss.sonatype.org/service/local/repositories/
 ### Tableau Taco
 
 Tableau Connector files are called "tacos".
-The current DuckDB Taco is in the [packaged connector directory](packaged-connector).
-
-The current version of the Taco is not signed, you will need to launch Tableau with signature validation disabled.
+The DuckDB Taco can be [downloaded here](https://github.com/hawkfish/duckdb-taco/raw/main/packaged-connector/duckdb_jdbc.taco).
+The current version of the Taco is not signed, so you will need to launch Tableau with signature validation disabled.
 (Despite what the Tableau documentation days, the real security risk is in the JDBC driver code,
 not the small amount of JavaScript in the Taco.)
 

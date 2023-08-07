@@ -13,15 +13,14 @@ Adding new drivers to Tableau is a bit tricky, but hopefully these directions sh
 
 ### JDBC Driver
 
-This connector uses the 0.8.2+ DuckDB JDBC driver. 
+The connector uses the 0.8.2+ DuckDB JDBC driver. 
 This is partly because the ODBC driver does not seem to work well on MacOS.
 
-At a high level, you need to download a recent version of the driver from 
-[the nightly JDBC build](https://github.com/duckdb/duckdb/actions/workflows/Java.yml) and 
+At a high level, you need to download a recent version of the driver and 
 [install it in the Tableau Drivers directory](https://tableau.github.io/connector-plugin-sdk/docs/drivers#jdbc-driver-class-isolation).
 It is expected that starting with the DuckDB 0.9.0 release, the shipping driver will be sufficient.
 
-The links here are for a recent version of the JDBC driver that is compatible with Tableau.
+The links here are for a recent snapshot of the JDBC driver that is compatible with Tableau.
 If you wish to connect to a database file,
 you will need to make sure the file was created with a file-compatible version of DuckDB.
 Also, check that there is only one version of the driver installed as there are multiple filenames in use.

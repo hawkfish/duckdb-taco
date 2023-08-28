@@ -82,7 +82,7 @@ to disable signature validation.
 ## Connecting
 
 Once the Taco is installed and you have launched Tableau,
-you can create a new connection by choosing "DuckDB JDBC by DuckDB Labs":
+you can create a new connection by choosing "DuckDB JDBC by MotherDuck":
 
 <img width="1364" alt="Development Mode Connect" src="./images/taco-dev.png">
 

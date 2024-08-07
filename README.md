@@ -1,5 +1,13 @@
 # duckdb-taco - A Tableau Connector for DuckDB
 
+## Deprecation
+
+The ownership of the Taco has been taken over by [Mother Duck](https://motherduck.com).
+Please use [their version](https://github.com/MotherDuck-Open-Source/duckdb-tableau-connector)
+and file any issues with them.
+
+## Introduction
+
 While it is possible to use the Tableau-provided Postgres dialect to communicate with the DuckDB JDBC driver,
 the experience is not ideal because there are some significant differences between the dialects.
 This connector has been fully tested against the Tableau dialect generator and is more compatible 
